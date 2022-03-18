@@ -24,7 +24,7 @@ model User {
 
 model Event {
   id Int @default(autoincrement()) @id
-  name String
+  name String 
   price Float
   type Type
   genres String[]
@@ -36,14 +36,13 @@ model Event {
   external_url String
   venue Venue @relation(fields: [venue_name], references: [name])
   venue_name String
-  promoter Promoter @relation(fields: [promoter_id], references: [id])
-  promoter_id Int
+  favorite_by User[]
   shows Show[]
 }
 
 model Venue {
   id String @default(uuid()) @id 
-  name String
+  name String @unique
   external_url String
   address String
   zipcode String
@@ -51,6 +50,8 @@ model Venue {
   latitude Float
   longitude Float
   events Event[]
+  promoter Promoter @relation(fields: [promoter_id], references: [id])
+  promoter_id Int
 }
 
 model Ticket {
@@ -77,6 +78,8 @@ model Show {
   active_sale Boolean
   available_seats Int
   tickets Ticket[]
+  event Event @relation(fields: [event_id], references: [id])
+  event_id Int
 }
 
 enum Type {

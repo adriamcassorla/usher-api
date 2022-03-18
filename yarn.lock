@@ -205,6 +205,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/client@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "@prisma/client@npm:3.11.0"
+  dependencies:
+    "@prisma/engines-version": 3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b
+  peerDependencies:
+    prisma: "*"
+  peerDependenciesMeta:
+    prisma:
+      optional: true
+  checksum: be0a4d7c8d8fd2a4b4ef527548a40e39be61d8d05ca01b1eb989e6d237ab7e1d558022ca30be803ecf8d0c7f0bf7f48ec8f143882642de8b13c6b13990b93e0c
+  languageName: node
+  linkType: hard
+
+"@prisma/engines-version@npm:3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b":
+  version: 3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b
+  resolution: "@prisma/engines-version@npm:3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b"
+  checksum: c3200d2000587155febee5cfeb5c8ce678ef4fff947fc239246096030f56a22cb9baabebea612527bcf2e5950ee203bea8b13c32b1d76126576d121c917a6f25
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b":
+  version: 3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b
+  resolution: "@prisma/engines@npm:3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b"
+  checksum: a2ca2af2fa0f5ab6616a0f9372f9a88bd200faaf4d2cdcbfa9c300550d0d592c5d55f32d0966944822a61e640b8dc1a3ac396b9f650a570f97775229b169280a
+  languageName: node
+  linkType: hard
+
 "@protobufjs/aspromise@npm:^1.1.1, @protobufjs/aspromise@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/aspromise@npm:1.1.2"
@@ -378,7 +406,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=12":
+"@types/node@npm:*, @types/node@npm:>=12, @types/node@npm:^17.0.21":
   version: 17.0.21
   resolution: "@types/node@npm:17.0.21"
   checksum: 89dcd2fe82f21d3634266f8384e9c865cf8af49685639fbdbd799bdd1040480fb1e8eeda2d3b9fce41edbe704d2a4be9f427118c4ae872e8d9bb7cbeb3c41a94
@@ -634,21 +662,6 @@ __metadata:
   checksum: 88bfcffdff12c448e8842a883bae534192741d6097ae360131ae44c3017083c840187a921df76cf4de42b353b04585b6422fba157c4fcaa280591a6c39dc1464
   languageName: node
   linkType: hard
-
-"apollo_from_scratch@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "apollo_from_scratch@workspace:."
-  dependencies:
-    apollo-server: ^3.6.4
-    apollo-server-core: ^3.6.2
-    apollo-server-express: ^3.6.2
-    commitizen: ^4.2.4
-    dotenv: ^16.0.0
-    express: ^4.17.2
-    graphql: ^16.3.0
-    typescript: ^4.3.2
-  languageName: unknown
-  linkType: soft
 
 "arg@npm:^4.1.0":
   version: 4.1.3
@@ -1795,6 +1808,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prisma@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "prisma@npm:3.11.0"
+  dependencies:
+    "@prisma/engines": 3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b
+  bin:
+    prisma: build/index.js
+    prisma2: build/index.js
+  checksum: b4f650bea628b77eee5f7d86418069585f7decaaeaa846c651bed3fbb17ce662ef625832ef14cf741ad7b127b4a50f1679e0bb96560b30e328240765ca80977f
+  languageName: node
+  linkType: hard
+
 "proxy-addr@npm:~2.0.7":
   version: 2.0.7
   resolution: "proxy-addr@npm:2.0.7"
@@ -2083,7 +2108,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.6.0":
+"ts-node@npm:^10.6.0, ts-node@npm:^10.7.0":
   version: 10.7.0
   resolution: "ts-node@npm:10.7.0"
   dependencies:
@@ -2145,7 +2170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.3.2, typescript@npm:^4.4.3":
+"typescript@npm:^4.4.3, typescript@npm:^4.6.2":
   version: 4.6.2
   resolution: "typescript@npm:4.6.2"
   bin:
@@ -2155,7 +2180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.3.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>":
   version: 4.6.2
   resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=493e53"
   bin:
@@ -2187,6 +2212,25 @@ __metadata:
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
   languageName: node
   linkType: hard
+
+"usher-api@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "usher-api@workspace:."
+  dependencies:
+    "@prisma/client": ^3.11.0
+    "@types/node": ^17.0.21
+    apollo-server: ^3.6.4
+    apollo-server-core: ^3.6.2
+    apollo-server-express: ^3.6.2
+    commitizen: ^4.2.4
+    dotenv: ^16.0.0
+    express: ^4.17.2
+    graphql: ^16.3.0
+    prisma: ^3.11.0
+    ts-node: ^10.7.0
+    typescript: ^4.6.2
+  languageName: unknown
+  linkType: soft
 
 "utils-merge@npm:1.0.1":
   version: 1.0.1
