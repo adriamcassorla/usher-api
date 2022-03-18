@@ -1,0 +1,32 @@
+{
+  "name": "apollo_from_scratch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc --watch --preserveWatchOutput",
+    "start": "nodemon ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriamcassorla/Apollo_from_scratch.git"
+  },
+  "author": "Adrià M. Cassorla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adriamcassorla/Apollo_from_scratch/issues"
+  },
+  "homepage": "https://github.com/adriamcassorla/Apollo_from_scratch#readme",
+  "dependencies": {
+    "apollo-server": "^3.6.4",
+    "apollo-server-core": "^3.6.2",
+    "apollo-server-express": "^3.6.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "graphql": "^16.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
+}
