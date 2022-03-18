@@ -3,12 +3,12 @@ import { gql } from 'apollo-server-express';
 export default gql`
 
 type User {
-  id: String!
+  id: String
   email: String!
   password: String!
   first_name: String!
   last_name: String!
-  created_at: String!
+  created_at: String
   favorite_events: [Event]!
   tickets: [Ticket]!
   notifications: Boolean!
@@ -20,20 +20,20 @@ type Event {
   price: Float!
   type: String!
   genres: [String]!
-  image: String!
-  poster: String!
-  language: String!
+  image: String
+  poster: String
+  language: String
   duration: Int
-  description: String!
+  description: String
   external_url: String!
-  venue: Venue!
-  venue_name: String
+  venue: Venue
+  venue_id: String
   favorite_by: [User]
   shows: [Show]
 }
 
 type Venue {
-  id: String!
+  id: String
   name: String!
   external_url: String!
   address: String!
@@ -56,7 +56,7 @@ type Ticket {
 }
 
 type Promoter {
-  id: Int!
+  id: Int
   name: String!
   email: String!
   password: String!
@@ -65,7 +65,7 @@ type Promoter {
 }
 
 type Show {
-  id: String!
+  id: String
   date: String!
   active_sale: Boolean!
   available_seats: Int!

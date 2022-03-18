@@ -29,7 +29,8 @@
     "commitizen": "^4.2.4",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
-    "graphql": "^16.3.0"
+    "graphql": "^16.3.0",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
