@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @default(uuid()) @id
+  email String @unique
+  password String
+  first_name String
+  last_name String
+  created_at DateTime @default(now())
+  favorite_events Event[]
+  tickets Ticket[]
+  notifications Boolean
+}
+
+model Event {
+  id Int @default(autoincrement()) @id
+  name String
+  price Float
+  type Type
+  genres String[]
+  image String
+  poster String
+  language String
+  duration Int
+  description String
+  external_url String
+  venue Venue @relation(fields: [venue_name], references: [name])
+  venue_name String
+  promoter Promoter @relation(fields: [promoter_id], references: [id])
+  promoter_id Int
+  shows Show[]
+}
+
+model Venue {
+  id String @default(uuid()) @id 
+  name String
+  external_url String
+  address String
+  zipcode String
+  city String
+  latitude Float
+  longitude Float
+  events Event[]
+}
+
+model Ticket {
+  id String @default(uuid()) @id
+  show Show @relation(fields: [show_id], references: [id])
+  show_id String
+  used Boolean
+  user User @relation(fields: [user_id], references: [id])
+  user_id String
+}
+
+model Promoter {
+  id Int @default(autoincrement()) @id
+  name String
+  email String @unique
+  password String
+  venues Venue[]
+  telephone Int
+}
+
+model Show {
+  id String @default(uuid()) @id
+  date DateTime
+  active_sale Boolean
+  available_seats Int
+  tickets Ticket[]
+}
+
+enum Type {
+  THEATER
+  CINEMA
+  CONCERT
+  CIRCUS
+}
