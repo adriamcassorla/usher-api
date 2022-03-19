@@ -1,45 +1,45 @@
-import moment from 'moment'
+import { DateTime } from 'luxon'
 
-export const getCityEvents = async (_, args: {city: string}, ctx) => {
+export const getCityEvents = async (_, args: { city: string, dayRange: number }, ctx) => {
   try {
 
-    const { city } = args;
-    const today = moment().toDate();
-    const tomorrow  = moment().add(1,'days').toDate();
+    const { city, dayRange } = args;
+    const today = DateTime.local();
+    const tomorrow = today.plus({ days: dayRange })
     const shows = await ctx.prisma.event.findMany({
-    where: {
-      venue: {
-        city
+      where: {
+        venue: {
+          city
+        },
+        shows: {
+          some: {
+            date: {
+              lt: tomorrow.toJSDate(),
+              gt: today.toJSDate()
+            }
+          }
+        }
       },
-      shows: {
-        some: {
-          date: {
-            lt: tomorrow,
-            gt: today
-        }
-        }
+      include: {
+        venue: true,
+        shows: true
       }
-    },
-    include: {  
-      venue: true,
-      shows: true
-    }
-  })
+    })
 
-  return shows;
+    return shows;
   } catch (e) {
     console.log(e);
   }
   // Filter by active and seats available?.
 }
 
-export const getEvent = async (_, args: {id: Number}, ctx) => {
+export const getEvent = async (_, args: { id: Number }, ctx) => {
   const { id } = args;
   const event = await ctx.prisma.event.findUnique({
-    where : {
+    where: {
       id
     },
-    include : {
+    include: {
       venue: true
     }
   })
