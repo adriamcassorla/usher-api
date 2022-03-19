@@ -40,7 +40,8 @@ export const getEvent = async (_, args: { id: Number }, ctx) => {
       id
     },
     include: {
-      venue: true
+      venue: true,
+      shows: true
     }
   })
   return event;
