@@ -11,6 +11,8 @@ export default {
   Mutation: {
     addFav: mutation.addFav,
     deleteFav: mutation.deleteFav,
+    createTicket: mutation.createTicket,
+    useTicket: mutation.useTicket,
   },
   Event: types.Event,
 };

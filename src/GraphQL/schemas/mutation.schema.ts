@@ -9,5 +9,7 @@ input InputPoint {
 type Mutation {
   addFav(userId: String!, eventId: Int!): [Event]!
   deleteFav(userId: String!, eventId: Int!): [Event]!
+  createTicket(userId: String!, showId: String!): Ticket!
+  useTicket(id: String!): Ticket!
 }
 `
