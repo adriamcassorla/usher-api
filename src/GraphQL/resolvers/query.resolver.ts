@@ -34,14 +34,37 @@ export const getCityEvents = async (_, args: {city: string}, ctx) => {
 }
 
 export const getEvent = async (_, args: {id: Number}, ctx) => {
+  try {
+
+    const { id } = args;
+    const event = await ctx.prisma.event.findUnique({
+      where : {
+        id
+      },
+      include : {
+        venue: true
+      }
+    })
+    return event;
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export const getProfile = async (_, args : {id : string}, ctx) => {
+  
   const { id } = args;
-  const event = await ctx.prisma.event.findUnique({
-    where : {
+
+  const profile = await ctx.prisma.user.findUnique({
+    where: {
       id
     },
     include : {
-      venue: true
+      favorite_events: true,
+      tickets: true
     }
   })
-  return event;
+
+  return profile
 }

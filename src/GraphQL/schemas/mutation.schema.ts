@@ -7,6 +7,8 @@ input InputPoint {
 }
 
 type Mutation {
+  addFav(userId: String!, eventId: String!): [Event]!
+  deleteFav(userId: String!, eventId: String!): [Event]!
   addVisitedDestination(userID: String!, locationID: String!): String!
 }
 `
