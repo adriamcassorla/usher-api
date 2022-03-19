@@ -1,4 +1,4 @@
-import { Event, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 import filteredShows from './mocks/mockShows'
 
