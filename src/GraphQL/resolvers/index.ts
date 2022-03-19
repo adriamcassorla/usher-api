@@ -3,7 +3,8 @@ import * as query from './query.resolver';
 
 export default {
   Query: {
-    getShows: query.getShows,
+    getCityEvents: query.getCityEvents,
+    getEvent: query.getEvent,
   },
   Mutation: {
   },
