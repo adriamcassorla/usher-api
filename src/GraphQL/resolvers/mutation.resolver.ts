@@ -1,9 +1,9 @@
-
-export const addFav = async (_, args: {userId: String, eventId: String}, ctx) => {
+// Should be fixed to toggle favorite.
+export const addFav = async (_, args: {userId: String, eventId: Number}, ctx) => {
   
   const { userId, eventId } = args;
   try {
-    const favorite = ctx.prisma.user.update({
+    const favorite = await ctx.prisma.user.update({
       where: {
         id: userId
       },
@@ -23,11 +23,11 @@ export const addFav = async (_, args: {userId: String, eventId: String}, ctx) =>
 
 }
 
-export const deleteFav = async (_, args: {userId: String, eventId: String}, ctx) => {
+export const deleteFav = async (_, args: {userId: String, eventId: Number}, ctx) => {
   
   const { userId, eventId } = args;
   try {
-    const favorite = ctx.prisma.user.update({
+    const favorite = await ctx.prisma.user.update({
       where: {
         id: userId
       },
