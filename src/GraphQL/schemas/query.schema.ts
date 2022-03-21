@@ -6,5 +6,6 @@ type Query {
   getCityEvents(city: String! dayRange: Int!): [Event]!
   getEvent(id: Int!): Event
   getProfile(id: String!): User
+  login(email: String! password: String!): String
 }
 `

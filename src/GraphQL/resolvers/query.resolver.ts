@@ -33,7 +33,7 @@ export const getCityEvents = async (_, args: { city: string, dayRange: number },
   // Filter by active and seats available?.
 }
 
-export const getEvent = async (_, args: {id: Number}, ctx) => {
+export const getEvent = async (_, args: {id: number}, ctx) => {
   try {
     const { id } = args;
     const event = await ctx.prisma.event.findUnique({

@@ -1,5 +1,5 @@
 // Should be fixed to toggle favorite.
-export const addFav = async (_, args: {userId: String, eventId: Number}, ctx) => {
+export const addFav = async (_, args: {userId: string, eventId: number}, ctx) => {
   
   const { userId, eventId } = args;
   try {
@@ -19,11 +19,12 @@ export const addFav = async (_, args: {userId: String, eventId: Number}, ctx) =>
     return favorite.favorite_events;
   } catch (e) {
     console.error(e)
+    return
   }
 
 }
 
-export const deleteFav = async (_, args: {userId: String, eventId: Number}, ctx) => {
+export const deleteFav = async (_, args: {userId: string, eventId: number}, ctx) => {
   
   const { userId, eventId } = args;
   try {
@@ -43,11 +44,12 @@ export const deleteFav = async (_, args: {userId: String, eventId: Number}, ctx)
     return favorite.favorite_events;
   } catch (e) {
     console.error(e)
+    return
   }
 
 }
 
-export const createTicket = async (_, args: {userId: String, showId: String}, ctx) => {
+export const createTicket = async (_, args: {userId: string, showId: string}, ctx) => {
 
   try {
     const { userId, showId } = args;
@@ -66,10 +68,11 @@ export const createTicket = async (_, args: {userId: String, showId: String}, ct
     return ticket
   } catch (e) {
     console.error(e)
+    return
   }
 }
 
-export const useTicket =async (_, args: {id: String}, ctx) => {
+export const useTicket = async (_, args: {id: string}, ctx) => {
 
   try {
     const { id } = args;
@@ -84,5 +87,6 @@ export const useTicket =async (_, args: {id: String}, ctx) => {
     return ticket;
   } catch (e) {
     console.error(e);
+    return
   }
 }
