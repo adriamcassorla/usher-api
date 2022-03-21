@@ -2,9 +2,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-export const createUser =async (_, args : {email: string, password: string, first_name: string, last_name: string, notifications: boolean}, ctx) => {
+export const createUser = async (_, args : {email: string, password: string, first_name: string, last_name: string, notifications: boolean}, ctx) => {
 
-  const { email, password, first_name, last_name, notifications } = args;
+  const { email, password, first_name, last_name } = args;
+  const notifications = args.notifications || false;
   if(!email || !password) {
     console.error('Provide valid email and password');
     return
@@ -16,12 +17,11 @@ export const createUser =async (_, args : {email: string, password: string, firs
   })
   if (user) {
     console.error('User already exists!')    
-    return
+    return ''
   }
   try {
 
     const hash = await bcrypt.hash(password, 10);
-    console.log(hash)
     const newUser = await ctx.prisma.user.create({
       data: {
         email,

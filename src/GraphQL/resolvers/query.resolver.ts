@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 
 export const getCityEvents = async (_, args: { city: string, dayRange: number }, ctx) => {
+  
   try {
 
     const { city, dayRange } = args;
