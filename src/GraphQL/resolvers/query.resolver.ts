@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 
 export const getCityEvents = async (_, args: { city: string, dayRange: number }, ctx) => {
-  
+
   try {
 
     const { city, dayRange } = args;
@@ -53,13 +53,13 @@ export const getEvent = async (_, args: {id: number}, ctx) => {
   }
 }
 
-export const getProfile = async (_, args : {id : string}, ctx) => {
-  
+export const getProfile = async (_, _args, ctx) => {
+  if (!ctx.id) return null
   try {
-    const { id } = args;   
+    // const { id } = args;   
     const profile = await ctx.prisma.user.findUnique({
       where: {
-        id
+        id: ctx.id
       },
       include : {
         favorite_events: true,
