@@ -74,4 +74,10 @@ type Show {
   event: Event!
   event_id: Int
 }
+
+type SignInResponse {
+    error: String
+    user: User
+    token: String
+}
 `

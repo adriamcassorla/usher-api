@@ -10,11 +10,11 @@ export const createUser = async (_, args: { email: string, password: string, fir
   const notifications = false;
   if (!email || !password) {
     console.error('Provide valid email and password');
-    return
+    return { error: 'Provide valid email and password'}
   }
   try {
     const hash = await bcrypt.hash(password, 10);
-    const newUser = await ctx.prisma.user.create({
+    const user = await ctx.prisma.user.create({
       data: {
         email,
         password: hash,
@@ -22,13 +22,15 @@ export const createUser = async (_, args: { email: string, password: string, fir
         last_name,
         notifications
       },
+      include: {
+        favorite_events: true,
+      }
     })
-    console.log(newUser)
-    const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
-    return accessToken
+    const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
+    return { user, token }
   } catch (e) {
     console.error(e);
-    return 'Unsuccesful, unable to generate new user.'
+    return { error: 'Unsuccesful, unable to generate new user.' }
   }
 
 }
