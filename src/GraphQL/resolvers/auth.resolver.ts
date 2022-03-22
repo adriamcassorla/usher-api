@@ -2,44 +2,44 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-export const createUser = async (_, args : {email: string, password: string, first_name: string, last_name: string, notifications: boolean}, ctx) => {
-
-  const { email, password, first_name, last_name } = args;
-  const notifications = args.notifications || false;
-  if(!email || !password) {
-    console.error('Provide valid email and password');
-    return
-  }
-  const user = await ctx.prisma.user.findUnique({
-    where: {
-      email
-    }
-  })
-  if (user) {
-    console.error('User already exists!')    
-    return ''
-  }
+export const createUser = async (_, args : {email: string, password: string, first_name: string, last_name: string}, ctx) => {
+  
   try {
-
-    const hash = await bcrypt.hash(password, 10);
-    const newUser = await ctx.prisma.user.create({
-      data: {
-        email,
-        password: hash,
-        first_name,
-        last_name,
-        notifications
-      },
+    const { email, password, first_name, last_name } = args;
+    const notifications = false;
+    if(!email || !password) {
+      console.error('Provide valid email and password');
+      return
+    }
+    const user = await ctx.prisma.user.findUnique({
+      where: {
+        email
+      }
     })
-    console.log(newUser)
-    const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, {expiresIn: '10h'})
-    return accessToken
-  } catch (e) {
-    console.error(e);
-    return 'Unsuccesful to generate new user'
+    if (user) {
+      console.error('User already exists!')    
+      return ''
+    }
+      
+      const hash = await bcrypt.hash(password, 10);
+      const newUser = await ctx.prisma.user.create({
+        data: {
+          email,
+          password: hash,
+          first_name,
+          last_name,
+          notifications
+        },
+      })
+      console.log(newUser)
+      const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, {expiresIn: '10h'})
+      return accessToken
+    } catch (e) {
+      console.error(e);
+      return 'Unsuccesful to generate new user'
+    }
   }
-}
-
+  
 export const login = async (_, args: {email: string, password: string}, ctx) => {
   const { email, password } = args;
   try {
@@ -57,3 +57,7 @@ export const login = async (_, args: {email: string, password: string}, ctx) => 
   }
 
 }
+
+// export const loginWithToken = async (_, _args, ctx) => {
+  
+// }

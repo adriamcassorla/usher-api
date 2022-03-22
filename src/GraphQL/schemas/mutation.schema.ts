@@ -6,6 +6,6 @@ export default gql`
     deleteFav(userId: String!, eventId: Int!): [Event]!
     createTicket(userId: String!, showId: String!): Ticket!
     useTicket(id: String!): Ticket!
-    createUser(email: String!, password: String!, first_name: String!, last_name: String!, notifications: Boolean): String
+    createUser(email: String!, password: String!, first_name: String!, last_name: String!): String
   }
 `
