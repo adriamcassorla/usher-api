@@ -4,39 +4,41 @@ const SECRET_KEY = process.env.SECRET_KEY as string;
 
 export const createUser = async (_, args : {email: string, password: string, first_name: string, last_name: string}, ctx) => {
   
-  try {
     const { email, password, first_name, last_name } = args;
     const notifications = false;
     if(!email || !password) {
       console.error('Provide valid email and password');
       return
     }
-    const user = await ctx.prisma.user.findUnique({
-      where: {
-        email
-      }
-    })
-    if (user) {
-      console.error('User already exists!')    
-      return ''
-    }
-      
-      const hash = await bcrypt.hash(password, 10);
-      const newUser = await ctx.prisma.user.create({
-        data: {
-          email,
-          password: hash,
-          first_name,
-          last_name,
-          notifications
-        },
+    try {
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          email
+        }
       })
-      console.log(newUser)
-      const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, {expiresIn: '10h'})
-      return accessToken
+      if (user) {
+        console.error('User already exists!')    
+        return 'Unsuccesful, user already exists'
+      }
     } catch (e) {
-      console.error(e);
-      return 'Unsuccesful to generate new user'
+      try {
+        const hash = await bcrypt.hash(password, 10);
+        const newUser = await ctx.prisma.user.create({
+          data: {
+            email,
+            password: hash,
+            first_name,
+            last_name,
+            notifications
+          },
+        })
+        console.log(newUser)
+        const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, {expiresIn: '10h'})
+        return accessToken
+      } catch (e) {
+        console.error(e);
+        return 'Unsuccesful, unable to generate new user.' 
+      }
     }
   }
   
