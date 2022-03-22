@@ -4,23 +4,23 @@ const SECRET_KEY = process.env.SECRET_KEY as string;
 
 export const createUser = async (_, args : {email: string, password: string, first_name: string, last_name: string}, ctx) => {
   
+  const { email, password, first_name, last_name } = args;
+  const notifications = false;
+  if(!email || !password) {
+    console.error('Provide valid email and password');
+    return
+  }
+  const user = await ctx.prisma.user.findUnique({
+    where: {
+      email
+    }
+  })
+  if (user) {
+    console.error('User already exists!')    
+    return ''
+  }
+  
   try {
-    const { email, password, first_name, last_name } = args;
-    const notifications = false;
-    if(!email || !password) {
-      console.error('Provide valid email and password');
-      return
-    }
-    const user = await ctx.prisma.user.findUnique({
-      where: {
-        email
-      }
-    })
-    if (user) {
-      console.error('User already exists!')    
-      return ''
-    }
-      
       const hash = await bcrypt.hash(password, 10);
       const newUser = await ctx.prisma.user.create({
         data: {
