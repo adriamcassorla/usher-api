@@ -4,9 +4,8 @@ import jwt from 'jsonwebtoken';
 import prisma from './../prisma/client'
 import typeDefs from './schemas';
 import resolvers from './resolvers';
-import { PrismaClient } from '@prisma/client';
 
-const SECRET_KEY = "yrulECx/t7cadA/W0/UJxoCnbIU=" as string;
+const SECRET_KEY = process.env.SECRET_KEY as string;
 
 export default new ApolloServer({
   cors: true,
