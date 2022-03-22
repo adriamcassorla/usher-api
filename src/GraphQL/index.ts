@@ -5,7 +5,7 @@ import prisma from './../prisma/client'
 import typeDefs from './schemas';
 import resolvers from './resolvers';
 
-const SECRET_KEY = process.env.SECRET_KEY as string;
+const SECRET_KEY = "yrulECx/t7cadA/W0/UJxoCnbIU=" as string;
 
 export default new ApolloServer({
   cors: true,
