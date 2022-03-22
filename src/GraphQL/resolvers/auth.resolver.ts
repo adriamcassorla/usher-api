@@ -10,17 +10,6 @@ export const createUser = async (_, args : {email: string, password: string, fir
       console.error('Provide valid email and password');
       return
     }
-    try {
-      const user = await ctx.prisma.user.findUnique({
-        where: {
-          email
-        }
-      })
-      if (user) {
-        console.error('User already exists!')    
-        return 'Unsuccesful, user already exists'
-      }
-    } catch (e) {
       try {
         const hash = await bcrypt.hash(password, 10);
         const newUser = await ctx.prisma.user.create({
@@ -39,7 +28,7 @@ export const createUser = async (_, args : {email: string, password: string, fir
         console.error(e);
         return 'Unsuccesful, unable to generate new user.' 
       }
-    }
+    
   }
   
 export const login = async (_, args: {email: string, password: string}, ctx) => {
