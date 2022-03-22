@@ -5,6 +5,7 @@ export default gql`
 type Query {
   getCityEvents(city: String! dayRange: Int!): [Event]!
   getEvent(id: Int!): Event
-  getProfile(id: String!): User
+  getProfile: User
+  login(email: String password: String): SignInResponse!
 }
 `
