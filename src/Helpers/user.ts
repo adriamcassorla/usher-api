@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-export const getProfile = async (id: string, prisma: PrismaClient) => {
+export const getUser = async (id: string, prisma: PrismaClient) => {
   const profile = await prisma.user.findUnique({
     where: {
       id

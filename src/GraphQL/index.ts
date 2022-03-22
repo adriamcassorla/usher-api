@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import prisma from './../prisma/client'
 import typeDefs from './schemas';
 import resolvers from './resolvers';
+import { PrismaClient } from '@prisma/client';
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 

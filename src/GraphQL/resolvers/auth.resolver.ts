@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { userInfo } from 'os';
-import { getProfile } from '../../Helpers/user';
+import { ContextType } from '../../Types/context-type'
+import { getUser } from '../../Helpers/user';
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-export const createUser = async (_, args: { email: string, password: string, first_name: string, last_name: string }, ctx) => {
+export const createUser = async (_, args: { email: string, password: string, first_name: string, last_name: string }, ctx: ContextType) => {
 
   const { email, password, first_name, last_name } = args;
   const notifications = false;
@@ -33,10 +33,10 @@ export const createUser = async (_, args: { email: string, password: string, fir
 
 }
 
-export const login = async (_, args: { email: string, password: string }, ctx) => {
+export const login = async (_, args: { email: string, password: string }, ctx: ContextType) => {
 
   if (ctx.user) {
-    const user = await getProfile(ctx.user.id, ctx.prisma)
+    const user = await getUser(ctx.user.id, ctx.prisma)
     if (user) return { user }
     return { error: 'User not found for existing token' }
   } else {
@@ -50,12 +50,14 @@ export const login = async (_, args: { email: string, password: string }, ctx) =
           tickets: true,
         }
       })
-      const validatePass = bcrypt.compare(password, user.password)
-      if (!validatePass) {
-        return { error: 'Invalid user or password' }
+      if (user) {
+        const validatePass = bcrypt.compare(password, user.password)
+        if (!validatePass) {
+          return { error: 'Invalid user or password' }
+        }
+        const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
+        return { user, token }
       }
-      const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
-      return { user, token }
     } catch (e) {
       console.error(e);
       return { error: 'Invalid user or password' }
