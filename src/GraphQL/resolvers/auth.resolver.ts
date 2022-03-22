@@ -1,54 +1,64 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { userInfo } from 'os';
+import { getProfile } from '../../Helpers/user';
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-export const createUser = async (_, args : {email: string, password: string, first_name: string, last_name: string}, ctx) => {
-  
-    const { email, password, first_name, last_name } = args;
-    const notifications = false;
-    if(!email || !password) {
-      console.error('Provide valid email and password');
-      return
-    }
-      try {
-        const hash = await bcrypt.hash(password, 10);
-        const newUser = await ctx.prisma.user.create({
-          data: {
-            email,
-            password: hash,
-            first_name,
-            last_name,
-            notifications
-          },
-        })
-        console.log(newUser)
-        const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, {expiresIn: '10h'})
-        return accessToken
-      } catch (e) {
-        console.error(e);
-        return 'Unsuccesful, unable to generate new user.' 
-      }
-    
-  }
-  
-export const login = async (_, args: {email: string, password: string}, ctx) => {
-  const { email, password } = args;
-  try {
+export const createUser = async (_, args: { email: string, password: string, first_name: string, last_name: string }, ctx) => {
 
-    const user = await ctx.prisma.user.findUnique({ where: { email } })
-    const validatePass = bcrypt.compare(password, user.password)
-    if (!validatePass) {
-      throw new Error('Invalid user or password')
-    }
-    const accessToken = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, {expiresIn: '10h'})
-    return accessToken;
+  const { email, password, first_name, last_name } = args;
+  const notifications = false;
+  if (!email || !password) {
+    console.error('Provide valid email and password');
+    return
+  }
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const newUser = await ctx.prisma.user.create({
+      data: {
+        email,
+        password: hash,
+        first_name,
+        last_name,
+        notifications
+      },
+    })
+    console.log(newUser)
+    const accessToken = jwt.sign({ id: newUser.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
+    return accessToken
   } catch (e) {
     console.error(e);
-    return 'Invalid user or password'
+    return 'Unsuccesful, unable to generate new user.'
   }
 
 }
 
-// export const loginWithToken = async (_, _args, ctx) => {
-  
-// }
+export const login = async (_, args: { email: string, password: string }, ctx) => {
+
+  if (ctx.user) {
+    const user = await getProfile(ctx.user.id, ctx.prisma)
+    if (user) return { user }
+    return { error: 'User not found for existing token' }
+  } else {
+
+    const { email, password } = args;
+    try {
+      const user = await ctx.prisma.user.findUnique({
+        where: { email },
+        include: {
+          favorite_events: true,
+          tickets: true,
+        }
+      })
+      const validatePass = bcrypt.compare(password, user.password)
+      if (!validatePass) {
+        return { error: 'Invalid user or password' }
+      }
+      const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
+      return { user, token }
+    } catch (e) {
+      console.error(e);
+      return { error: 'Invalid user or password' }
+    }
+  }
+}

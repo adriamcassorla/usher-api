@@ -34,14 +34,14 @@ export const getCityEvents = async (_, args: { city: string, dayRange: number },
   // Filter by active and seats available?.
 }
 
-export const getEvent = async (_, args: {id: number}, ctx) => {
+export const getEvent = async (_, args: { id: number }, ctx) => {
   try {
     const { id } = args;
     const event = await ctx.prisma.event.findUnique({
-      where : {
+      where: {
         id
       },
-      include : {
+      include: {
         venue: true,
         shows: true
       }
@@ -53,19 +53,18 @@ export const getEvent = async (_, args: {id: number}, ctx) => {
   }
 }
 
-export const getProfile = async (_, _args, ctx) => {
-  if (!ctx.id) return null
+export const getProfile = async (_, __, ctx) => {
+  if (!ctx.user) return null
   try {
-    // const { id } = args;   
     const profile = await ctx.prisma.user.findUnique({
       where: {
-        id: ctx.id
+        id: ctx.user.id
       },
-      include : {
+      include: {
         favorite_events: true,
         tickets: true
       }
-    })  
+    })
     return profile
   } catch (e) {
     console.error(e);

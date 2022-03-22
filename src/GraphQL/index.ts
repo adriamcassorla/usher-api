@@ -11,7 +11,6 @@ export default new ApolloServer({
   cors: true,
   typeDefs,
   resolvers,
-  // context: { prisma }
   context: ({ req }) => {
 
     const token = req.headers.authorization;
