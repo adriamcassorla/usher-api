@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch --preserveWatchOutput",
-    "start": "nodemon ./dist/index.js"
+    "start": "nodemon ./dist/src/index.js"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

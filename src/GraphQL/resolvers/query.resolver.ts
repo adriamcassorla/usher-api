@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
+import { ContextType } from '../../Types/context-type';
 
-export const getCityEvents = async (_, args: { city: string, dayRange: number }, ctx) => {
+export const getCityEvents = async (_, args: { city: string, dayRange: number }, ctx: ContextType) => {
 
   try {
 
@@ -34,7 +35,7 @@ export const getCityEvents = async (_, args: { city: string, dayRange: number },
   // Filter by active and seats available?.
 }
 
-export const getEvent = async (_, args: { id: number }, ctx) => {
+export const getEvent = async (_, args: { id: number }, ctx: ContextType) => {
   try {
     const { id } = args;
     const event = await ctx.prisma.event.findUnique({
@@ -53,7 +54,7 @@ export const getEvent = async (_, args: { id: number }, ctx) => {
   }
 }
 
-export const getProfile = async (_, __, ctx) => {
+export const getProfile = async (_, __, ctx: ContextType) => {
   if (!ctx.user) return null
   try {
     const profile = await ctx.prisma.user.findUnique({

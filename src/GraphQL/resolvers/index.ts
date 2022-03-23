@@ -9,11 +9,11 @@ export default {
     getEvent: query.getEvent,
     getProfile: query.getProfile,
     login: auth.login,
-  }, 
+  },
   Mutation: {
     addFav: mutation.addFav,
     deleteFav: mutation.deleteFav,
-    createTicket: mutation.createTicket,
+    createTickets: mutation.createTickets,
     useTicket: mutation.useTicket,
     createUser: auth.createUser,
   },

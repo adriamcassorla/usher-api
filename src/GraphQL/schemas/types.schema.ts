@@ -80,4 +80,9 @@ type SignInResponse {
     user: User
     token: String
 }
+
+type TicketResponse {
+  error: String
+  show: Show
+}
 `

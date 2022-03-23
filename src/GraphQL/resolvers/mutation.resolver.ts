@@ -1,8 +1,9 @@
 import { getUser } from "../../Helpers/user";
+import { ContextType } from "../../Types/context-type";
 
 // Should be fixed to toggle favorite.
-export const addFav = async (_, args: {eventId: number}, ctx) => {
-  
+export const addFav = async (_, args: { eventId: number }, ctx: ContextType) => {
+
   if (ctx.user) {
     const userId = ctx.user.id
     const { eventId } = args;
@@ -13,8 +14,8 @@ export const addFav = async (_, args: {eventId: number}, ctx) => {
         },
         data: {
           favorite_events: {
-            connect: {id: eventId}
-          } 
+            connect: { id: eventId }
+          }
         },
         include: {
           favorite_events: true
@@ -29,7 +30,7 @@ export const addFav = async (_, args: {eventId: number}, ctx) => {
   return
 }
 
-export const deleteFav = async (_, args: {eventId: number}, ctx) => {
+export const deleteFav = async (_, args: { eventId: number }, ctx: ContextType) => {
   if (ctx.user) {
     const userId = ctx.user.id;
     const { eventId } = args;
@@ -40,8 +41,8 @@ export const deleteFav = async (_, args: {eventId: number}, ctx) => {
         },
         data: {
           favorite_events: {
-            disconnect: {id: eventId}
-          } 
+            disconnect: { id: eventId }
+          }
         },
         include: {
           favorite_events: true
@@ -52,35 +53,56 @@ export const deleteFav = async (_, args: {eventId: number}, ctx) => {
       console.error(e)
       return
     }
-  } 
-  return
-    
   }
-  
-  export const createTicket = async (_, args: {userId: string, showId: string}, ctx) => {
+  return
 
+}
+
+export const createTickets = async (_, args: { show_id: string, nSeats: number }, ctx: ContextType) => {
+
+  if (!ctx.user) return { error: 'Unable to identify user from request.' }
+
+  const user_id = ctx.user.id;
   try {
-    const { userId, showId } = args;
-    const ticket = await ctx.prisma.ticket.create({
-      data: {
-        user_id: userId,
-        show_id: showId,
-        used: false,
+    const { show_id, nSeats } = args;
+
+    // Check seats available for that show
+    const showSeats = await ctx.prisma.show.findUnique({
+      where: {
+        id: show_id,
       },
-      // Should we include show and user info for the greeting page?
-      include: {
-        show: true,
-        user: true,
+      select: {
+        available_seats: true,
       }
     })
-    return ticket
+    const available_seats = showSeats?.available_seats || 0;
+    if (!showSeats || available_seats <= nSeats) {
+      return { error: 'Number of seats required is greater than seats available.' }
+    }
+
+    // If there are enouh seats, generates nSeats tickets.
+    const data = Array(nSeats).fill({ user_id, show_id, used: false, })
+    const tickets = await ctx.prisma.ticket.createMany({ data })
+    if (tickets.count !== nSeats) return { error: 'Internal error' }
+
+    // Updates the available seats of the show.
+    const show = await ctx.prisma.show.update({
+      data: {
+        available_seats: available_seats - nSeats,
+      },
+      where: { id: show_id },
+      include: {
+        event: true
+      }
+    })
+    return { show } // Returns the show info
   } catch (e) {
     console.error(e)
-    return
+    return { error: String(e) }
   }
 }
 
-export const useTicket = async (_, args: {id: string}, ctx) => {
+export const useTicket = async (_, args: { id: string }, ctx: ContextType) => {
 
   try {
     const { id } = args;
