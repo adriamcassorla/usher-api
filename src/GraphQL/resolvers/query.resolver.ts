@@ -62,7 +62,19 @@ export const getProfile = async (_, __, ctx) => {
       },
       include: {
         favorite_events: true,
-        tickets: true
+        tickets: {
+          include: {
+            show: {
+              include: {
+                event: {
+                  include: {
+                    venue: true
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     })
     return profile
