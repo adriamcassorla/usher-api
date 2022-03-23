@@ -6,7 +6,7 @@ export const getCityEvents = async (_, args: { city: string, dayRange: number },
 
     const { city, dayRange } = args;
     const today = DateTime.local();
-    const tomorrow = today.plus({ days: dayRange })
+    const limitDay = today.plus({ days: dayRange })
     const shows = await ctx.prisma.event.findMany({
       where: {
         venue: {
@@ -15,7 +15,7 @@ export const getCityEvents = async (_, args: { city: string, dayRange: number },
         shows: {
           some: {
             date: {
-              lt: tomorrow.toJSDate(),
+              lt: limitDay.toJSDate(),
               gt: today.toJSDate()
             }
           }
