@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import jwt from 'jsonwebtoken';
 
-import prisma from './../prisma/client'
+import prisma from '../../prisma/client'
 import typeDefs from './schemas';
 import resolvers from './resolvers';
 
