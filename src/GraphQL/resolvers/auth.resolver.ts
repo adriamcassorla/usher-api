@@ -26,7 +26,7 @@ export const createUser = async (_, args: { email: string, password: string, fir
         favorite_events: true,
       }
     })
-    const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
+    const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY)
     return { user, token }
   } catch (e) {
     console.error(e);
@@ -57,7 +57,7 @@ export const login = async (_, args: { email: string, password: string }, ctx: C
         if (!validatePass) {
           return { error: 'Invalid user or password' }
         }
-        const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY, { expiresIn: '10h' })
+        const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY)
         return { user, token }
       }
     } catch (e) {

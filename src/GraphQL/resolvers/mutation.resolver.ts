@@ -1,55 +1,63 @@
+import { getUser } from "../../Helpers/user";
+
 // Should be fixed to toggle favorite.
-export const addFav = async (_, args: {userId: string, eventId: number}, ctx) => {
+export const addFav = async (_, args: {eventId: number}, ctx) => {
   
-  const { userId, eventId } = args;
-  try {
-    const favorite = await ctx.prisma.user.update({
-      where: {
-        id: userId
-      },
-      data: {
-        favorite_events: {
-          connect: {id: eventId}
-        } 
-      },
-      include: {
-        favorite_events: true
-      }
-    })
-    return favorite.favorite_events;
-  } catch (e) {
-    console.error(e)
-    return
+  if (ctx.user) {
+    const userId = ctx.user.id
+    const { eventId } = args;
+    try {
+      const favorite = await ctx.prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          favorite_events: {
+            connect: {id: eventId}
+          } 
+        },
+        include: {
+          favorite_events: true
+        }
+      })
+      return favorite.favorite_events;
+    } catch (e) {
+      console.error(e)
+      return
+    }
   }
-
+  return
 }
 
-export const deleteFav = async (_, args: {userId: string, eventId: number}, ctx) => {
-  
-  const { userId, eventId } = args;
-  try {
-    const favorite = await ctx.prisma.user.update({
-      where: {
-        id: userId
-      },
-      data: {
-        favorite_events: {
-          disconnect: {id: eventId}
-        } 
-      },
-      include: {
-        favorite_events: true
-      }
-    })
-    return favorite.favorite_events;
-  } catch (e) {
-    console.error(e)
-    return
+export const deleteFav = async (_, args: {eventId: number}, ctx) => {
+  if (ctx.user) {
+    const userId = ctx.user.id;
+    const { eventId } = args;
+    try {
+      const favorite = await ctx.prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          favorite_events: {
+            disconnect: {id: eventId}
+          } 
+        },
+        include: {
+          favorite_events: true
+        }
+      })
+      return favorite.favorite_events;
+    } catch (e) {
+      console.error(e)
+      return
+    }
+  } 
+  return
+    
   }
-
-}
-
-export const createTicket = async (_, args: {userId: string, showId: string}, ctx) => {
+  
+  export const createTicket = async (_, args: {userId: string, showId: string}, ctx) => {
 
   try {
     const { userId, showId } = args;
