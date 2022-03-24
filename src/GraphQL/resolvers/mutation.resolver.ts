@@ -1,4 +1,3 @@
-import { getUser } from "../../Helpers/user";
 import { ContextType } from "../../Types/context-type";
 
 // Should be fixed to toggle favorite.

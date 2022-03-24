@@ -7,8 +7,7 @@ export default {
   Query: {
     getCityEvents: query.getCityEvents,
     getEvent: query.getEvent,
-    getProfile: query.getProfile,
-    login: auth.login,
+    getUser: auth.getUser,
   },
   Mutation: {
     addFav: mutation.addFav,
@@ -18,4 +17,5 @@ export default {
     createUser: auth.createUser,
   },
   Event: types.Event,
+  User: types.User
 };

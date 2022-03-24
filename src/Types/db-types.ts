@@ -1,71 +1,71 @@
 type User = {
-  id: String,
-  email: String,
-  password: String,
-  first_name: String,
-  last_name: String,
-  created_at: String,
+  id: string,
+  email: string,
+  password: string,
+  first_name: string,
+  last_name: string,
+  created_at: string,
   favorite_events: EventType[]
   tickets: [Ticket],
   notifications: Boolean,
 }
 
 type EventType = {
-  id: Number,
-  name: String,
-  price: Number,
-  type: String,
-  genres: String[],
-  image?: String,
-  poster?: String,
-  language?: String,
-  duration?: Number,
-  description?: String,
-  external_url?: String,
+  id: number,
+  name: string,
+  price: number,
+  type: string,
+  genres: string[],
+  image?: string,
+  poster?: string,
+  language?: string,
+  duration?: number,
+  description?: string,
+  external_url?: string,
   venue: Venue,
-  venue_id: String,
+  venue_id: string,
   favorite_by: User[],
   shows: Show[],
 }
 
 type Venue = {
-  id: String,
-  name: String,
-  external_url?: String,
-  address: String,
-  zipcode: String,
-  city: String,
-  latitude: Number,
-  longitude: Number,
+  id: string,
+  name: string,
+  external_url?: string,
+  address: string,
+  zipcode: string,
+  city: string,
+  latitude: number,
+  longitude: number,
   events: EventType[],
   promoter: Promoter,
-  promoter_id: Number,
+  promoter_id: number,
 }
 
 type Ticket = {
-  id: String,
+  id: string,
   show: Show,
-  show_id: String,
+  show_id: string,
   used: Boolean,
   user: User,
-  user_id: String,
+  user_id: string,
 }
 
 type Promoter = {
-  id: Number,
-  name: String,
-  email: String,
-  password: String,
+  id: number,
+  name: string,
+  email: string,
+  password: string,
   venues: Venue[],
-  telephone?: Number
+  telephone?: number
 }
 
 type Show = {
-  id: String,
-  date: String,
+  id: string,
+  date: string,
   active_sale: Boolean,
-  available_seats: Number,
+  available_seats: number,
   tickets: Ticket[],
   event: EventType,
-  event_id: Number
+  event_id: number
 }

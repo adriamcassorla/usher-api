@@ -10,6 +10,7 @@ type User {
   last_name: String!
   created_at: String
   favorite_events: [Event]!
+  favorite_ids: [Int]!
   tickets: [Ticket]!
   notifications: Boolean!
 }
@@ -31,6 +32,7 @@ type Event {
   favorite_by: [User]
   shows: [Show]
   today_shows: [Show]
+  next_show: Show
 }
 
 type Venue {
