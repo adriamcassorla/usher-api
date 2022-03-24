@@ -3,8 +3,8 @@ import { gql } from 'apollo-server-express';
 export default gql` 
   
   type Mutation {
-    addFav(eventId: Int!): [Event]!
-    deleteFav(eventId: Int!): [Event]!
+    addFav(eventId: Int!): User!
+    deleteFav(eventId: Int!): User!
     createTickets(show_id: String!, nSeats: Int! ): TicketResponse!
     useTicket(id: String!): Ticket!
     createUser(email: String!, password: String!, first_name: String!, last_name: String!): SignInResponse!

@@ -20,7 +20,7 @@ export const addFav = async (_, args: { eventId: number }, ctx: ContextType) => 
           favorite_events: true
         }
       })
-      return favorite.favorite_events;
+      return favorite;
     } catch (e) {
       console.error(e)
       return
@@ -47,7 +47,7 @@ export const deleteFav = async (_, args: { eventId: number }, ctx: ContextType) 
           favorite_events: true
         }
       })
-      return favorite.favorite_events;
+      return favorite;
     } catch (e) {
       console.error(e)
       return

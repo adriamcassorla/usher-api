@@ -23,8 +23,6 @@ export const Event = {
 
 export const User = {
   favorite_ids(user: User) {
-    const favIDs: number[] = [];
-    user.favorite_events.forEach(event => favIDs.push(event.id));
-    return favIDs;
+    return user.favorite_events.map(event => event.id);
   },
 }
