@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
 import { ContextType } from '../../Types/context-type';
 
-export const getCityEvents = async (_, args: { city: string, dayRange: number }, ctx: ContextType) => {
+type gceArgs = { city: string, dayRange: number };
+export const getCityEvents = async (_, args: gceArgs, ctx: ContextType) => {
 
   try {
     const { city, dayRange } = args;
@@ -25,7 +26,8 @@ export const getCityEvents = async (_, args: { city: string, dayRange: number },
   }
 }
 
-export const getEvent = async (_, args: { id: number }, ctx: ContextType) => {
+type geArgs = { id: number };
+export const getEvent = async (_, args: geArgs, ctx: ContextType) => {
   try {
     const { id } = args;
     const event = await ctx.prisma.event.findUnique({

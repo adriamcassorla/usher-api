@@ -1,8 +1,7 @@
 import { ContextType } from "../../Types/context-type";
 
-// Should be fixed to toggle favorite.
-export const addFav = async (_, args: { eventId: number }, ctx: ContextType) => {
-
+type afArgs = { eventId: number };
+export const addFav = async (_, args: afArgs, ctx: ContextType) => {
   if (ctx.user) {
     const userId = ctx.user.id
     const { eventId } = args;
@@ -29,7 +28,8 @@ export const addFav = async (_, args: { eventId: number }, ctx: ContextType) => 
   return
 }
 
-export const deleteFav = async (_, args: { eventId: number }, ctx: ContextType) => {
+type dfArgs = { eventId: number };
+export const deleteFav = async (_, args: dfArgs, ctx: ContextType) => {
   if (ctx.user) {
     const userId = ctx.user.id;
     const { eventId } = args;
@@ -57,7 +57,8 @@ export const deleteFav = async (_, args: { eventId: number }, ctx: ContextType) 
 
 }
 
-export const createTickets = async (_, args: { show_id: string, nSeats: number }, ctx: ContextType) => {
+type ctArgs = { show_id: string, nSeats: number };
+export const createTickets = async (_, args: ctArgs, ctx: ContextType) => {
 
   if (!ctx.user) return { error: 'Unable to identify user from request.' }
 
@@ -101,8 +102,8 @@ export const createTickets = async (_, args: { show_id: string, nSeats: number }
   }
 }
 
-export const useTicket = async (_, args: { id: string }, ctx: ContextType) => {
-
+type utArgs = { id: string };
+export const useTicket = async (_, args: utArgs, ctx: ContextType) => {
   try {
     const { id } = args;
     const ticket = ctx.prisma.ticket.update({
