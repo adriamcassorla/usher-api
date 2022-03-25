@@ -102,21 +102,28 @@ export const createTickets = async (_, args: ctArgs, ctx: ContextType) => {
   }
 }
 
-type utArgs = { id: string };
-export const useTicket = async (_, args: utArgs, ctx: ContextType) => {
+type utArgs = { showID: string, ticketId: string };
+export const validateTicket = async (_, args: utArgs, ctx: ContextType) => {
   try {
-    const { id } = args;
-    const ticket = ctx.prisma.ticket.update({
+    const { showID, ticketId } = args;
+    const { count } = await ctx.prisma.ticket.updateMany({
       where: {
-        id
+        id: ticketId,
+        show_id: showID,
+        used: false
       },
       data: {
         used: true
       }
     })
-    return ticket;
+    if (count === 1) {
+      return { ticket: ticketId };
+    } else {
+      return {
+        error: 'Ticket not valid or already used'
+      }
+    }
   } catch (e) {
-    console.error(e);
-    return
+    return { error: 'Ticket not valid or already used' }
   }
 }
