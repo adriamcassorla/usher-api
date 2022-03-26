@@ -1,8 +1,7 @@
 import { ContextType } from "../../Types/context-type";
 
-// Should be fixed to toggle favorite.
-export const addFav = async (_, args: { eventId: number }, ctx: ContextType) => {
-
+type afArgs = { eventId: number };
+export const addFav = async (_, args: afArgs, ctx: ContextType) => {
   if (ctx.user) {
     const userId = ctx.user.id
     const { eventId } = args;
@@ -29,7 +28,8 @@ export const addFav = async (_, args: { eventId: number }, ctx: ContextType) => 
   return
 }
 
-export const deleteFav = async (_, args: { eventId: number }, ctx: ContextType) => {
+type dfArgs = { eventId: number };
+export const deleteFav = async (_, args: dfArgs, ctx: ContextType) => {
   if (ctx.user) {
     const userId = ctx.user.id;
     const { eventId } = args;
@@ -57,7 +57,8 @@ export const deleteFav = async (_, args: { eventId: number }, ctx: ContextType) 
 
 }
 
-export const createTickets = async (_, args: { show_id: string, nSeats: number }, ctx: ContextType) => {
+type ctArgs = { show_id: string, nSeats: number };
+export const createTickets = async (_, args: ctArgs, ctx: ContextType) => {
 
   if (!ctx.user) return { error: 'Unable to identify user from request.' }
 
@@ -101,21 +102,28 @@ export const createTickets = async (_, args: { show_id: string, nSeats: number }
   }
 }
 
-export const useTicket = async (_, args: { id: string }, ctx: ContextType) => {
-
+type utArgs = { showID: string, ticketId: string };
+export const validateTicket = async (_, args: utArgs, ctx: ContextType) => {
   try {
-    const { id } = args;
-    const ticket = ctx.prisma.ticket.update({
+    const { showID, ticketId } = args;
+    const { count } = await ctx.prisma.ticket.updateMany({
       where: {
-        id
+        id: ticketId,
+        show_id: showID,
+        used: false
       },
       data: {
         used: true
       }
     })
-    return ticket;
+    if (count === 1) {
+      return { ticket: ticketId };
+    } else {
+      return {
+        error: 'Ticket not valid or already used'
+      }
+    }
   } catch (e) {
-    console.error(e);
-    return
+    return { error: 'Ticket not valid or already used' }
   }
 }

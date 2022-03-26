@@ -4,7 +4,8 @@ import { ContextType } from '../../Types/context-type'
 import { getProfile } from '../../Helpers/user';
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
-export const createUser = async (_, args: { email: string, password: string, first_name: string, last_name: string }, ctx: ContextType) => {
+type cuArgs = { email: string, password: string, first_name: string, last_name: string };
+export const createUser = async (_, args: cuArgs, ctx: ContextType) => {
 
   const { email, password, first_name, last_name } = args;
   const notifications = false;
@@ -24,6 +25,19 @@ export const createUser = async (_, args: { email: string, password: string, fir
       },
       include: {
         favorite_events: true,
+        tickets: {
+          include: {
+            show: {
+              include: {
+                event: {
+                  include: {
+                    venue: true
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     })
     const token = jwt.sign({ id: user.id, role: 'user' }, SECRET_KEY)
@@ -35,7 +49,8 @@ export const createUser = async (_, args: { email: string, password: string, fir
 
 }
 
-export const getUser = async (_, args: { email: string, password: string }, ctx: ContextType) => {
+type guArgs = { email: string, password: string }
+export const getUser = async (_, args: guArgs, ctx: ContextType) => {
 
   if (ctx.user) {
     const user = await getProfile(ctx.user.id, ctx.prisma)
@@ -44,12 +59,14 @@ export const getUser = async (_, args: { email: string, password: string }, ctx:
   } else {
 
     const { email, password } = args;
+    if (!email) return { error: 'No email sended' }
+    console.log(email)
     try {
       const userInit = await ctx.prisma.user.findUnique({
         where: { email },
       })
       if (userInit) {
-        const validatePass = bcrypt.compare(password, userInit.password)
+        const validatePass = await bcrypt.compare(password, userInit.password)
         if (!validatePass) {
           return { error: 'Invalid user or password' }
         }

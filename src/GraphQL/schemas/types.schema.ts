@@ -86,5 +86,6 @@ type SignInResponse {
 type TicketResponse {
   error: String
   show: Show
+  ticket: String
 }
 `

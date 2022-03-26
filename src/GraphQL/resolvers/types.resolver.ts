@@ -12,8 +12,10 @@ export const Event = {
   },
   next_show(event: EventType) {
     const now = DateTime.local();
-    const nextShow = event.shows.find(show => {
-      // Returns the first show after today.
+    const sortedShows = event.shows.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+    const nextShow = sortedShows.find(show => {
       const showDate = DateTime.fromJSDate(new Date(show.date));
       return showDate > now;
     })

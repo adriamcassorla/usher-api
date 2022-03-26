@@ -13,7 +13,7 @@ export default {
     addFav: mutation.addFav,
     deleteFav: mutation.deleteFav,
     createTickets: mutation.createTickets,
-    useTicket: mutation.useTicket,
+    validateTicket: mutation.validateTicket,
     createUser: auth.createUser,
   },
   Event: types.Event,

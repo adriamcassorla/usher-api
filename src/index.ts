@@ -5,17 +5,17 @@ import router from './Stripe';
 import server from './GraphQL';
 const { httpServer, app, apolloServer } = server;
 
-(async function() {
+(async function () {
 
   app.use(cors());
   app.use(bodyParser.json());
-  app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
+  app.post('/webhook', bodyParser.raw({ type: 'application/json' }), (req, res) => {
     const payload = req.body;
     console.log('Got payload: ' + payload);
     res.status(200)
   })
   app.use('/stripe', router);
-  
+
   await apolloServer.start();
   apolloServer.applyMiddleware({ app, cors: true, bodyParserConfig: true });
   await new Promise<void>(resolve => httpServer.listen({ port: 4004 }, resolve));
@@ -25,5 +25,4 @@ const { httpServer, app, apolloServer } = server;
     res.send('Incorrect route')
   })
 })()
-  
-  
+
