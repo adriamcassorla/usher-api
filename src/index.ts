@@ -17,8 +17,8 @@ const { httpServer, app, apolloServer } = server;
   app.use('/stripe', router);
 
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app, cors: true, bodyParserConfig: true });
-  await new Promise<void>(resolve => httpServer.listen({ port: 4004, hostname: '192.168.1.138' }, resolve));
+  apolloServer.applyMiddleware({ app });
+  await new Promise<void>(resolve => httpServer.listen({ port: 4004 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4004${apolloServer.graphqlPath}`);
   app.all('*', (req, res) => {
     res.status(404);
