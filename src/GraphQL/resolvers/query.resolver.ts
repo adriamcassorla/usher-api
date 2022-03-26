@@ -45,3 +45,29 @@ export const getEvent = async (_, args: geArgs, ctx: ContextType) => {
     console.error(e);
   }
 }
+
+type vsArgs = { id: string };
+export const validateShow = async (_, args: vsArgs, ctx: ContextType) => {
+  try {
+    const { id } = args;
+    const show = await ctx.prisma.show.findUnique({
+      where: {
+        id
+      },
+      include: {
+        event: true
+      }
+    })
+    if (show) {
+      const today = DateTime.local();
+      const showDate = DateTime.fromJSDate(new Date(show.date));
+      if (showDate.hasSame(today, 'day')) {
+        return { show }
+      }
+      return { error: 'Only shows for today can be validated.' }
+    }
+    return { error: 'Show not valid' }
+  } catch (e) {
+    return { error: 'Show not valid' }
+  }
+}

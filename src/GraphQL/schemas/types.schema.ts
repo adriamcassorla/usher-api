@@ -76,16 +76,4 @@ type Show {
   event: Event!
   event_id: Int
 }
-
-type SignInResponse {
-    error: String
-    user: User
-    token: String
-}
-
-type TicketResponse {
-  error: String
-  show: Show
-  ticket: String
-}
 `

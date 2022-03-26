@@ -102,14 +102,14 @@ export const createTickets = async (_, args: ctArgs, ctx: ContextType) => {
   }
 }
 
-type utArgs = { showID: string, ticketId: string };
+type utArgs = { showId: string, ticketId: string };
 export const validateTicket = async (_, args: utArgs, ctx: ContextType) => {
   try {
-    const { showID, ticketId } = args;
+    const { showId, ticketId } = args;
     const { count } = await ctx.prisma.ticket.updateMany({
       where: {
         id: ticketId,
-        show_id: showID,
+        show_id: showId,
         used: false
       },
       data: {

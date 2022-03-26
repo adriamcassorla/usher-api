@@ -8,6 +8,7 @@ export default {
     getCityEvents: query.getCityEvents,
     getEvent: query.getEvent,
     getUser: auth.getUser,
+    validateShow: query.validateShow
   },
   Mutation: {
     addFav: mutation.addFav,
