@@ -8,12 +8,6 @@ type SignInResponse {
     token: String
 }
 
-type TicketResponse {
-  error: String
-  show: Show
-  ticket: String
-}
-
 type ShowResponse {
   error: String
   show: Show
@@ -24,5 +18,6 @@ type Query {
   getEvent(id: Int!): Event
   getUser(email: String password: String): SignInResponse!
   validateShow(id: String!): ShowResponse!
+  getTicketUsage(id: String!): TicketResponse
 }
 `

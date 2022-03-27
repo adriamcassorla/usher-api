@@ -1,6 +1,13 @@
 import { gql } from 'apollo-server-express';
 
 export default gql` 
+
+  type TicketResponse {
+  error: String
+  show: Show
+  ticket: String
+  used: Boolean
+  }
   
   type Mutation {
     addFav(eventId: Int!): User!

@@ -71,3 +71,24 @@ export const validateShow = async (_, args: vsArgs, ctx: ContextType) => {
     return { error: 'Show not valid' }
   }
 }
+
+
+
+type tuArgs = { id: string };
+export const getTicketUsage = async (_, args: tuArgs, ctx: ContextType) => {
+
+  try {
+    const { id } = args;
+    const ticket = await ctx.prisma.ticket.findUnique({
+      where: {
+        id
+      },
+    })
+    if (ticket) {
+      return { used: ticket.used }
+    }
+    return { error: 'Ticket not found' }
+  } catch (e) {
+    return { error: 'Ticket not found' }
+  }
+}
