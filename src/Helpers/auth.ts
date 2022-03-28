@@ -21,4 +21,28 @@ export const getProfile = async (id: string, prisma: PrismaClient) => {
     }
   })
   return profile;
-} 
+}
+
+export const getPromoterProfile = async (id: number, prisma: PrismaClient) => {
+  const promoter = await prisma.promoter.findUnique({
+    where: {
+      id
+    },
+    include: {
+      venues: {
+        include: {
+          events: {
+            include: {
+              shows: {
+                include: {
+                  tickets: true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+  return promoter;
+}

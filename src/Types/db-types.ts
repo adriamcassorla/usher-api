@@ -81,11 +81,12 @@ type EventInput = {
   language: string,
   duration: number,
   description: string,
-  external_url?: string,
+  external_url: string,
   venue_id: string,
-  shows: {
-    date: number
-    active_sale?: boolean,
-    available_seats: number
-  },
 }
+
+type ShowInput = {
+  date: string
+  active_sale: boolean,
+  available_seats: number
+};

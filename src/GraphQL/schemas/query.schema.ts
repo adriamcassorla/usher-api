@@ -29,7 +29,7 @@ type Query {
   getUser(email: String password: String): SignInResponse!
   validateShow(id: String!): ShowResponse!
   getTicketUsage(id: String!): TicketResponse!
-  getPromoterProfile(id: Int): PromoterResponse!
   getVenueInfo(id: String): VenueResponse!
+  getPromoter(email: String password: String): PromoterSignInResponse!
 }
 `

@@ -128,7 +128,38 @@ export const validateTicket = async (_, args: utArgs, ctx: ContextType) => {
   }
 }
 
-type ceArgs = {
-  input: EventInput
-};
-export const createEvent = async (_, args: ceArgs, ctx: ContextType) => { }
+
+
+type ceArgs = { event: EventInput, shows: ShowInput[] };
+export const createEvent = async (_, args: ceArgs, ctx: ContextType) => {
+  // if (!ctx.user || ctx.user.role === 'PROMOTER') {
+  //   return { error: 'Unauthorised' }
+  // }
+  try {
+    const { event, shows } = args;
+    const formatedShows = shows.map(show => {
+      const newShow = {
+        ...show,
+        date: new Date(+show.date)
+      }
+      return newShow;
+    })
+    const newEvent = await ctx.prisma.event.create({
+      data: {
+        ...event,
+        shows: {
+          create: formatedShows
+        }
+      },
+      include: {
+        shows: true
+      }
+    })
+    console.log(newEvent)
+    if (newEvent) return { event: newEvent };
+    return { error: 'There has been an error while creting a new event' }
+  } catch (e) {
+    console.error(e)
+    return { error: 'There has been an error while creting a new event' }
+  }
+}

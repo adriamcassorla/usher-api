@@ -9,7 +9,7 @@ export default gql`
   used: Boolean
   }
 
-  input EventInput {
+input EventInput {
   name: String!
   price: Float!
   type: EventTypes!
@@ -21,13 +21,17 @@ export default gql`
   description: String!
   external_url: String!
   venue_id: String!
-  shows: [ShowInput]!
 }
 
 input ShowInput {
-    date: Int!
+    date: String!
     active_sale: Boolean!
     available_seats: Int!
+}
+
+type EventResponse {
+  error: String
+  event: Event
 }
 
   
@@ -37,6 +41,7 @@ input ShowInput {
     createTickets(show_id: String!, nSeats: Int! ): TicketResponse!
     validateTicket(showId: String!, ticketId: String!): TicketResponse!
     createUser(email: String!, password: String!, first_name: String!, last_name: String!): SignInResponse!
-    createEvent(input: EventInput!):Event!
+    createEvent(event: EventInput!, shows:[ShowInput]!):EventResponse!
+    createPromoter(email: String!, password: String!, name: String!, telephone: Int!): PromoterSignInResponse!
   }
 `

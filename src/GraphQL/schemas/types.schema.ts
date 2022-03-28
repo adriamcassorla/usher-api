@@ -105,4 +105,21 @@ enum EventTypes {
   CINEMA
   CIRCUS
 }
+
+type SignInResponse {
+    error: String
+    user: User
+    token: String
+}
+
+type PromoterSignInResponse {
+  error: String
+  promoter: Promoter
+  token: String
+}
+
+type TicketResponse {
+  error: String
+  show: Show
+}
 `
