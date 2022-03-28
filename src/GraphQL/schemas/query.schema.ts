@@ -18,6 +18,11 @@ type PromoterResponse {
   error: String
 }
 
+type VenueResponse {
+  venue: Venue
+  error: String
+}
+
 type Query {
   getCityEvents(city: String! dayRange: Int): [Event]!
   getEvent(id: Int!): Event
@@ -25,5 +30,6 @@ type Query {
   validateShow(id: String!): ShowResponse!
   getTicketUsage(id: String!): TicketResponse!
   getPromoterProfile(id: Int): PromoterResponse!
+  getVenueInfo(id: String): VenueResponse!
 }
 `

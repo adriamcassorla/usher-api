@@ -125,3 +125,33 @@ export const getPromoterProfile = async (_, args: ppArgs, ctx: ContextType) => {
     return { error: 'Promoter not found' }
   }
 }
+
+type gvArgs = { id: string };
+export const getVenueInfo = async (_, args: gvArgs, ctx: ContextType) => {
+  try {
+    const { id } = args;
+    const venue = await ctx.prisma.venue.findUnique({
+      where: {
+        id
+      },
+      include: {
+        events: {
+          include: {
+            shows: {
+              include: {
+                tickets: true
+              }
+            }
+          }
+        }
+      }
+    })
+    if (venue) {
+      return { venue }
+    }
+    return { error: 'Venue not found' }
+  } catch (e) {
+    console.error(e)
+    return { error: 'Venue not found' }
+  }
+}

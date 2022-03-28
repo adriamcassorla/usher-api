@@ -8,18 +8,16 @@ export const isShowActive = (show: Show) => {
 }
 
 type StatsDetails = {
-  seats: number | 0
-  sold_tickets: number | 0
-  sales: number | 0
+  seats: number
+  sold_tickets: number
+  sales: number
 }
-
 type RangeStats = {
   total: StatsDetails;
   by_event: {
     [key: string]: StatsDetails
   }
 }
-
 type Stats = {
   day: RangeStats
   week: RangeStats

@@ -43,5 +43,4 @@ export const Promoter = {
   stats(promoter: Promoter) {
     return getStats(promoter);
   }
-
 }
