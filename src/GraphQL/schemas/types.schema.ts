@@ -83,6 +83,12 @@ type SignInResponse {
     token: String
 }
 
+type PromoterSignInResponse {
+  error: String
+  promoter: Promoter
+  token: String
+}
+
 type TicketResponse {
   error: String
   show: Show
