@@ -29,7 +29,7 @@ type Event {
   external_url: String!
   venue: Venue
   venue_id: String
-  favorite_by: [User]
+  favorite_by: Int
   shows: [Show]
   today_shows: [Show]
   next_show: Show
@@ -65,6 +65,13 @@ type Promoter {
   password: String!
   venues: [Venue]!
   telephone: Int
+  stats: Stats
+}
+
+type Stats: {
+  active_events: Int!
+  available_seats: Int!
+  
 }
 
 type Show {

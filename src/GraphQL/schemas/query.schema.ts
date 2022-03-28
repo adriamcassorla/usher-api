@@ -18,6 +18,6 @@ type Query {
   getEvent(id: Int!): Event
   getUser(email: String password: String): SignInResponse!
   validateShow(id: String!): ShowResponse!
-  getTicketUsage(id: String!): TicketResponse
+  getTicketUsage(id: String!): TicketResponse!
 }
 `
