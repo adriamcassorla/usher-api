@@ -76,7 +76,6 @@ export const validateShow = async (_, args: vsArgs, ctx: ContextType) => {
 
 type tuArgs = { id: string };
 export const getTicketUsage = async (_, args: tuArgs, ctx: ContextType) => {
-
   try {
     const { id } = args;
     const ticket = await ctx.prisma.ticket.findUnique({
@@ -90,5 +89,39 @@ export const getTicketUsage = async (_, args: tuArgs, ctx: ContextType) => {
     return { error: 'Ticket not found' }
   } catch (e) {
     return { error: 'Ticket not found' }
+  }
+}
+
+type ppArgs = { id: number };
+export const getPromoterProfile = async (_, args: ppArgs, ctx: ContextType) => {
+  try {
+    const { id } = args;
+    const promoter = await ctx.prisma.promoter.findUnique({
+      where: {
+        id
+      },
+      include: {
+        venues: {
+          include: {
+            events: {
+              include: {
+                shows: {
+                  include: {
+                    tickets: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+    if (promoter) {
+      return { promoter }
+    }
+    return { error: 'Promoter not found' }
+  } catch (e) {
+    console.error(e)
+    return { error: 'Promoter not found' }
   }
 }

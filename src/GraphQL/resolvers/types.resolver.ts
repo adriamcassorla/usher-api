@@ -1,13 +1,9 @@
 import { DateTime } from 'luxon'
+import { getStats, isShowActive } from '../../Helpers/events';
 
 export const Event = {
   today_shows(event: EventType) {
-    const now = DateTime.local();
-    const todayShows = event.shows.filter(show => {
-      // Returns only shows of that day.
-      const showDate = DateTime.fromJSDate(new Date(show.date));
-      return showDate.hasSame(now, 'day') && showDate > now;
-    })
+    const todayShows = event.shows.filter(isShowActive)
     return todayShows
   },
   next_show(event: EventType) {
@@ -32,10 +28,20 @@ export const User = {
   },
 }
 
-
-export const Stats = {
+export const Promoter = {
   active_events(promoter: Promoter) {
-    // Events that are on sale now.
-    console.log(promoter)
+    const activeEvents: EventType[] = [];
+    promoter.venues.forEach(venue => {
+      venue.events.forEach(event => {
+        if (event.shows.some(isShowActive)) {
+          activeEvents.push(event)
+        }
+      })
+    })
+    return activeEvents;
+  },
+  stats(promoter: Promoter) {
+    return getStats(promoter);
   }
+
 }

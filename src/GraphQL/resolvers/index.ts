@@ -9,7 +9,8 @@ export default {
     getEvent: query.getEvent,
     getUser: auth.getUser,
     validateShow: query.validateShow,
-    getTicketUsage: query.getTicketUsage
+    getTicketUsage: query.getTicketUsage,
+    getPromoterProfile: query.getPromoterProfile
   },
   Mutation: {
     addFav: mutation.addFav,
@@ -19,5 +20,6 @@ export default {
     createUser: auth.createUser,
   },
   Event: types.Event,
-  User: types.User
+  User: types.User,
+  Promoter: types.Promoter,
 };

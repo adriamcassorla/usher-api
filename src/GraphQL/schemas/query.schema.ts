@@ -13,11 +13,17 @@ type ShowResponse {
   show: Show
 }
 
+type PromoterResponse {
+  promoter: Promoter
+  error: String
+}
+
 type Query {
   getCityEvents(city: String! dayRange: Int): [Event]!
   getEvent(id: Int!): Event
   getUser(email: String password: String): SignInResponse!
   validateShow(id: String!): ShowResponse!
   getTicketUsage(id: String!): TicketResponse!
+  getPromoterProfile(id: Int): PromoterResponse!
 }
 `

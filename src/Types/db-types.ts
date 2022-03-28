@@ -58,6 +58,7 @@ type Promoter = {
   password: string,
   venues: Venue[],
   telephone?: number
+  active_events: EventType[]
 }
 
 type Show = {

@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server-express';
+import GraphQLJSON from 'graphql-type-json';
 
 export default gql`
+scalar JSON
 
 type User {
   id: String
@@ -65,13 +67,26 @@ type Promoter {
   password: String!
   venues: [Venue]!
   telephone: Int
+  active_events: [Event]
   stats: Stats
 }
 
-type Stats: {
-  active_events: Int!
-  available_seats: Int!
-  
+type StatsDetails {
+  seats: Int
+  sold_tickets: Int
+  sales: Float
+}
+
+type RangeStats {
+  total: StatsDetails
+  by_event: JSON
+}
+
+type Stats {
+  day: RangeStats
+  week: RangeStats
+  month: RangeStats
+  year: RangeStats
 }
 
 type Show {
