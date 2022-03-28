@@ -70,3 +70,22 @@ type Show = {
   event: EventType,
   event_id: number
 }
+
+type EventInput = {
+  name: string,
+  price: number,
+  type: 'THEATER' | 'CONCERT' | 'CINEMA' | 'CIRCUS',
+  genres: string[],
+  image: string,
+  poster: string,
+  language: string,
+  duration: number,
+  description: string,
+  external_url?: string,
+  venue_id: string,
+  shows: {
+    date: number
+    active_sale?: boolean,
+    available_seats: number
+  },
+}

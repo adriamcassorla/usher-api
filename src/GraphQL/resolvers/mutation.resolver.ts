@@ -127,3 +127,8 @@ export const validateTicket = async (_, args: utArgs, ctx: ContextType) => {
     return { error: 'Ticket not valid or already used' }
   }
 }
+
+type ceArgs = {
+  input: EventInput
+};
+export const createEvent = async (_, args: ceArgs, ctx: ContextType) => { }

@@ -19,6 +19,7 @@ export default {
     createTickets: mutation.createTickets,
     validateTicket: mutation.validateTicket,
     createUser: auth.createUser,
+    createEvent: mutation.createEvent
   },
   Event: types.Event,
   User: types.User,

@@ -21,7 +21,7 @@ type Event {
   id: Int
   name: String! 
   price: Float!
-  type: String!
+  type: EventTypes!
   genres: [String]!
   image: String
   poster: String
@@ -97,5 +97,12 @@ type Show {
   tickets: [Ticket]!
   event: Event!
   event_id: Int
+}
+
+enum EventTypes {
+  THEATER
+  CONCERT
+  CINEMA
+  CIRCUS
 }
 `
