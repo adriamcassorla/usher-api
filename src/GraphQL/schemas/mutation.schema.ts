@@ -15,5 +15,6 @@ export default gql`
     createTickets(show_id: String!, nSeats: Int! ): TicketResponse!
     validateTicket(showId: String!, ticketId: String!): TicketResponse!
     createUser(email: String!, password: String!, first_name: String!, last_name: String!): SignInResponse!
+    createPromoter(email: String!, password: String!, name: String!, telephone: Int!): PromoterSignInResponse!
   }
 `

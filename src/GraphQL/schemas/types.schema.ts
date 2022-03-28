@@ -76,4 +76,21 @@ type Show {
   event: Event!
   event_id: Int
 }
+
+type SignInResponse {
+    error: String
+    user: User
+    token: String
+}
+
+type PromoterSignInResponse {
+  error: String
+  promoter: Promoter
+  token: String
+}
+
+type TicketResponse {
+  error: String
+  show: Show
+}
 `
