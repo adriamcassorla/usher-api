@@ -80,7 +80,7 @@ export const createTickets = async (_, args: ctArgs, ctx: ContextType) => {
       return { error: 'Number of seats required is greater than seats available.' }
     }
 
-    // If there are enouh seats, generates nSeats tickets.
+    // If there are enough seats, generates nSeats tickets.
     const data = Array(nSeats).fill({ user_id, show_id, used: false, })
     const tickets = await ctx.prisma.ticket.createMany({ data })
     if (tickets.count !== nSeats) return { error: 'Internal error' }
@@ -132,17 +132,16 @@ export const validateTicket = async (_, args: utArgs, ctx: ContextType) => {
 
 type ceArgs = { event: EventInput, shows: ShowInput[] };
 export const createEvent = async (_, args: ceArgs, ctx: ContextType) => {
-  // if (!ctx.user || ctx.user.role === 'PROMOTER') {
-  //   return { error: 'Unauthorised' }
-  // }
+  if (!ctx.user || ctx.user.role === 'PROMOTER') {
+    return { error: 'Unauthorised' }
+  }
   try {
     const { event, shows } = args;
     const formatedShows = shows.map(show => {
-      const newShow = {
+      return {
         ...show,
         date: new Date(+show.date)
-      }
-      return newShow;
+      };
     })
     const newEvent = await ctx.prisma.event.create({
       data: {

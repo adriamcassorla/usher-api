@@ -18,7 +18,7 @@ export const Event = {
     return nextShow
   },
   favorite_by(event: EventType) {
-    return event.favorite_by.length;
+    return event.favorite_by.length || 0;
   }
 };
 
